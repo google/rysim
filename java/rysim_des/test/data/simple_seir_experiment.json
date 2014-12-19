@@ -1,0 +1,6 @@
+{
+    "experiment_name": "SimpleSEIRExperiment",
+    "event_limit": 1000,
+    "model_filename": "simple_seir_model.json",
+    "type": "simple"
+}

@@ -1,0 +1,6 @@
+{
+    "experiment_name": "LoopSEIRExperiment",
+    "event_limit": 1000,
+    "model_filename": "loop_seir_model.json",
+    "type": "loop"
+}

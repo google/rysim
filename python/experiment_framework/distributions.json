@@ -1,0 +1,386 @@
+{
+    "distributions" : [
+        {
+            "label" : "DistributionFlat100",
+            "type" : "Flat",
+            "params" : [ 1, 100 ]
+        },
+        {
+            "label" : "DistributionFlat5",
+            "type" : "Flat",
+            "params" : [ 1, 5 ]
+        },
+        {
+            "label" : "DistributionFlat10",
+            "type" : "Flat",
+            "params" : [ 1, 10 ]
+        },
+        {
+            "label" : "DistributionFlat25",
+            "type" : "Flat",
+            "params" : [ 1, 25 ]
+        },
+        {
+            "label" : "DistributionFlat50",
+            "type" : "Flat",
+            "params" : [ 1, 50 ]
+        },
+        {
+            "label" : "DistributionPoisson1x5",
+            "type" : "Poisson",
+            "scale" : 5.0,
+            "params" : [ 1 ]
+        },
+        {
+            "label" : "DistributionPoisson1x20",
+            "type" : "Poisson",
+            "scale" : 20.0,
+            "params" : [ 1 ]
+        },
+        {
+            "label" : "DistributionPoisson1x1",
+            "type" : "Poisson",
+            "scale" : 1.0,
+            "params" : [ 1 ]
+        },
+        {
+            "label" : "DistributionPoisson4x5",
+            "type" : "Poisson",
+            "scale" : 5.0,
+            "params" : [ 4 ]
+        },
+        {
+            "label" : "DistributionPoisson4x20",
+            "type" : "Poisson",
+            "scale" : 20.0,
+            "params" : [ 4 ]
+        },
+        {
+            "label" : "DistributionPoisson4x1",
+            "type" : "Poisson",
+            "scale" : 1.0,
+            "params" : [ 4 ]
+        },
+        {
+            "label" : "DistributionPoisson10x5",
+            "type" : "Poisson",
+            "scale" : 5.0,
+            "params" : [ 10 ]
+        },
+        {
+            "label" : "DistributionPoisson10x20",
+            "type" : "Poisson",
+            "scale" : 20.0,
+            "params" : [ 10 ]
+        },
+        {
+            "label" : "DistributionPoisson10x1",
+            "type" : "Poisson",
+            "scale" : 1.0,
+            "params" : [ 10 ]
+        },
+        {
+            "label": "DistributionGaussianTail0x10",
+            "type": "GaussianTail",
+            "params": [0, 10]
+        },
+        {
+            "label": "DistributionGaussianTail0x25",
+            "type": "GaussianTail",
+            "params": [0, 25]
+        },
+        {
+            "label": "DistributionGaussianTail0x100",
+            "type": "GaussianTail",
+            "params": [0, 100]
+        },
+        {
+            "label": "DistributionGaussianTail5x10",
+            "type": "GaussianTail",
+            "params": [5, 10]
+        },
+        {
+            "label": "DistributionGaussianTail5x25",
+            "type": "GaussianTail",
+            "params": [5, 25]
+        },
+        {
+            "label": "DistributionGaussianTail5x100",
+            "type": "GaussianTail",
+            "params": [5, 100]
+        },
+        {
+            "label": "DistributionGaussianTail10x10",
+            "type": "GaussianTail",
+            "params": [10, 10]
+        },
+        {
+            "label": "DistributionGaussianTail10x25",
+            "type": "GaussianTail",
+            "params": [10, 25]
+        },
+        {
+            "label": "DistributionGaussianTail10x100",
+            "type": "GaussianTail",
+            "params": [10, 100]
+        },
+        {
+            "label": "DistributionExponential1x1",
+            "type": "Exponential",
+            "scale": 1.0,
+            "params": [ 1.0 ]
+        },
+        {
+            "label": "DistributionExponential1x5",
+            "type": "Exponential",
+            "scale": 5.0,
+            "params": [ 1.0 ]
+        },
+        {
+            "label": "DistributionExponential1x10",
+            "type": "Exponential",
+            "scale": 10.0,
+            "params": [ 1.0 ]
+        },
+        {
+            "label": "DistributionExponential0.5x1",
+            "type": "Exponential",
+            "scale": 1.0,
+            "params": [ 0.5 ]
+        },
+        {
+            "label": "DistributionExponential0.5x5",
+            "type": "Exponential",
+            "scale": 5.0,
+            "params": [ 0.5 ]
+        },
+        {
+            "label": "DistributionExponential0.5x10",
+            "type": "Exponential",
+            "scale": 10.0,
+            "params": [ 0.5 ]
+        },
+        {
+            "label": "DistributionExponential0.15x1",
+            "type": "Exponential",
+            "scale": 1.0,
+            "params": [ 0.15 ]
+        },
+        {
+            "label": "DistributionExponential0.15x5",
+            "type": "Exponential",
+            "scale": 5.0,
+            "params": [ 0.15 ]
+        },
+        {
+            "label": "DistributionExponential0.15x10",
+            "type": "Exponential",
+            "scale": 10.0,
+            "params": [ 0.15 ]
+        },
+        {
+            "label": "DistributionLognormal5x0.5x1",
+            "type": "Lognormal",
+            "scale": 1.0,
+            "params": [ 5, 0.5 ]
+        },
+        {
+            "label": "DistributionLognormal5x1.5x1",
+            "type": "Lognormal",
+            "scale": 1.0,
+            "params": [ 5, 1.5 ]
+        },
+        {
+            "label": "DistributionLognormal0x1x1",
+            "type": "Lognormal",
+            "scale": 1.0,
+            "params": [ 0.0, 1.0 ]
+        },
+        {
+            "label": "DistributionLognormal0x1x5",
+            "type": "Lognormal",
+            "scale": 5.0,
+            "params": [ 0.0, 1.0 ]
+        },
+        {
+            "label": "DistributionLognormal0x1x10",
+            "type": "Lognormal",
+            "scale": 10.0,
+            "params": [ 0.0, 1.0 ]
+        },
+        {
+            "label": "DistributionLognormal0x0.5x1",
+            "type": "Lognormal",
+            "scale": 1.0,
+            "params": [ 0.0, 0.5 ]
+        },
+        {
+            "label": "DistributionLognormal0x0.5x5",
+            "type": "Lognormal",
+            "scale": 5.0,
+            "params": [ 0.0, 0.5 ]
+        },
+        {
+            "label": "DistributionLognormal0x0.5x10",
+            "type": "Lognormal",
+            "scale": 10.0,
+            "params": [ 0.0, 0.5 ]
+        },
+        {
+            "label": "DistributionLognormal0x0.25x1",
+            "type": "Lognormal",
+            "scale": 1.0,
+            "params": [ 0.0, 0.25 ]
+        },
+        {
+            "label": "DistributionLognormal0x0.25x5",
+            "type": "Lognormal",
+            "scale": 5.0,
+            "params": [ 0.0, 0.25 ]
+        },
+        {
+            "label": "DistributionLognormal0x0.25x10",
+            "type": "Lognormal",
+            "scale": 10.0,
+            "params": [ 0.0, 0.25 ]
+        },
+        {
+            "label": "DistributionBernoulli0.1x1",
+            "type": "Bernoulli",
+            "scale": 1.0,
+            "params": [ 0.1 ]
+        },
+        {
+            "label": "DistributionBernoulli0.5x1",
+            "type": "Bernoulli",
+            "scale": 1.0,
+            "params": [ 0.5 ]
+        },
+        {
+            "label": "DistributionBernoulli0.9x1",
+            "type": "Bernoulli",
+            "scale": 1.0,
+            "params": [ 0.9 ]
+        },
+        {
+            "label": "DistributionBernoulli0.1x5",
+            "type": "Bernoulli",
+            "scale": 5.0,
+            "params": [ 0.1 ]
+        },
+        {
+            "label": "DistributionBernoulli0.5x5",
+            "type": "Bernoulli",
+            "scale": 5.0,
+            "params": [ 0.5 ]
+        },
+        {
+            "label": "DistributionBernoulli0.9x5",
+            "type": "Bernoulli",
+            "scale": 5.0,
+            "params": [ 0.9 ]
+        },
+        {
+            "label": "DistributionBernoulli0.1x10",
+            "type": "Bernoulli",
+            "scale": 10.0,
+            "params": [ 0.1 ]
+        },
+        {
+            "label": "DistributionBernoulli0.5x10",
+            "type": "Bernoulli",
+            "scale": 10.0,
+            "params": [ 0.5 ]
+        },
+        {
+            "label": "DistributionBernoulli0.9x10",
+            "type": "Bernoulli",
+            "scale": 10.0,
+            "params": [ 0.9 ]
+        },
+        {
+            "label": "DistributionBinomial0.5x20",
+            "type": "Binomial",
+            "params": [ 0.5, 20 ]
+        },
+        {
+            "label": "DistributionBinomial0.7x20",
+            "type": "Binomial",
+            "params": [ 0.7, 20 ]
+        },
+        {
+            "label": "DistributionBinomial0.5x40",
+            "type": "Binomial",
+            "params": [ 0.5, 40 ]
+        },
+        {
+            "label": "DistributionNegativeBinomial0.3x7",
+            "type": "NegativeBinomial",
+            "params": [ 0.3, 7 ]
+        },
+        {
+            "label": "DistributionNegativeBinomial0.2x1",
+            "type": "NegativeBinomial",
+            "params": [ 0.2, 1 ]
+        },
+        {
+            "label": "DistributionNegativeBinomial0.6x10",
+            "type": "NegativeBinomial",
+            "params": [ 0.6, 10 ]
+        },
+        {
+            "label": "DistributionGeometric0.2x1",
+            "type": "Geometric",
+            "scale": 1.0,
+            "params": [ 0.2 ]
+        },
+        {
+            "label": "DistributionGeometric0.2x5",
+            "type": "Geometric",
+            "scale": 5.0,
+            "params": [ 0.2 ]
+        },
+        {
+            "label": "DistributionGeometric0.2x10",
+            "type": "Geometric",
+            "scale": 10.0,
+            "params": [ 0.2 ]
+        },
+        {
+            "label": "DistributionGeometric0.5x1",
+            "type": "Geometric",
+            "scale": 1.0,
+            "params": [ 0.5 ]
+        },
+        {
+            "label": "DistributionGeometric0.5x5",
+            "type": "Geometric",
+            "scale": 5.0,
+            "params": [ 0.5 ]
+        },
+        {
+            "label": "DistributionGeometric0.5x10",
+            "type": "Geometric",
+            "scale": 10.0,
+            "params": [ 0.5 ]
+        },
+        {
+            "label": "DistributionGeometric0.8x1",
+            "type": "Geometric",
+            "scale": 1.0,
+            "params": [ 0.8 ]
+        },
+        {
+            "label": "DistributionGeometric0.8x5",
+            "type": "Geometric",
+            "scale": 5.0,
+            "params": [ 0.8 ]
+        },
+        {
+            "label": "DistributionGeometric0.8x10",
+            "type": "Geometric",
+            "scale": 10.0,
+            "params": [ 0.8 ]
+        }
+    ]
+}

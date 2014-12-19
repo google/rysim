@@ -1,0 +1,17 @@
+{application, rysim_des,
+ [{description, "Ryan's Simulation Application, DES Implementation"},
+  {vsn, "2.0.0"},
+  {modules, [event_queue,
+             num_gen,
+             parsers,
+             parsers_experiment,
+             parsers_model,
+             rysim,
+             agent_seir,
+             validators]},
+  {registered, []},
+  {applications, [kernel,
+                  stdlib]},
+  {mod, {rysim, []}},
+  {env, []}
+ ]}.

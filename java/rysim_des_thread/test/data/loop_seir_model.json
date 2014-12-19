@@ -1,0 +1,68 @@
+{
+    "model_name": "LoopSEIRModel",
+    "total_connections": 12,
+    "distributions": [
+        {
+            "label": "FlatFour",
+            "type": "Flat",
+            "params": [
+                4,
+                4
+            ]
+        }
+    ],
+    "agents": [
+        {
+            "label": "Patient0",
+            "state": "Infectious",
+            "connections": [
+                "Patient1",
+                "Patient2",
+                "Patient3"
+            ],
+            "s2e": "FlatFour",
+            "e2i": "FlatFour",
+            "i2r": "FlatFour",
+            "r2s": "FlatFour"
+        },
+        {
+            "label": "Patient1",
+            "state": "Exposed",
+            "connections": [
+                "Patient0",
+                "Patient2",
+                "Patient3"
+            ],
+            "s2e": "FlatFour",
+            "e2i": "FlatFour",
+            "i2r": "FlatFour",
+            "r2s": "FlatFour"
+        },
+        {
+            "label": "Patient2",
+            "state": "Susceptible",
+            "connections": [
+                "Patient0",
+                "Patient1",
+                "Patient3"
+            ],
+            "s2e": "FlatFour",
+            "e2i": "FlatFour",
+            "i2r": "FlatFour",
+            "r2s": "FlatFour"
+        },
+        {
+            "label": "Patient3",
+            "state": "Recovered",
+            "connections": [
+                "Patient0",
+                "Patient1",
+                "Patient2"
+            ],
+            "s2e": "FlatFour",
+            "e2i": "FlatFour",
+            "i2r": "FlatFour",
+            "r2s": "FlatFour"
+        }
+    ]
+}

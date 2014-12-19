@@ -1,0 +1,6 @@
+{
+    "experiment_name": "TrivialSEIRExperiment",
+    "event_limit": 0,
+    "model_filename": "trivial_seir_model.json",
+    "type": "trivial"
+}

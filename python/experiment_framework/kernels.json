@@ -1,0 +1,11 @@
+{
+    "kernels": [
+        "kernels/rysim_des_actor_erlang/rysim_des_actor",
+        "kernels/rysim_des_actor_erlang_smp/rysim_des_actor_smp",
+        "kernels/rysim_des_actor_java/rysim_des_actor-1.0/bin/rysim_des_actor",
+        "kernels/rysim_des_c++/rysim",
+        "kernels/rysim_des_erlang/rysim_des",
+        "kernels/rysim_des_java/rysim_des-1.0/bin/rysim_des",
+        "kernels/rysim_des_thread_java/rysim_des_thread-1.0/bin/rysim_des_thread"
+    ]
+}

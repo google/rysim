@@ -1,0 +1,26 @@
+apply plugin:'application'
+apply plugin: 'java'
+apply plugin: 'maven'
+
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+    compile 'net.sf.jopt-simple:jopt-simple:4.7'
+}
+
+sourceSets.main.java.srcDirs = ['src']
+
+applicationDefaultJvmArgs = ["-ea"]
+
+mainClassName = "com.rysim.Main"
+run {
+    if (project.hasProperty("appArgs")) {
+        args Eval.me(appArgs)
+    }
+}

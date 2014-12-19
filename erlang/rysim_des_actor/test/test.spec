@@ -1,0 +1,3 @@
+{logdir, "./logs/"}.
+
+{suites, ./, all}.

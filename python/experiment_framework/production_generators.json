@@ -1,0 +1,93 @@
+{
+    "generators": [
+        {
+            "base_name": "CompleteGenerator",
+            "generator_type" : "complete",
+            "generator_params" : [ ],
+            "looping" : true,
+            "agents_start": 20,
+            "agents_end": 2000
+        },
+        {
+            "base_name": "CompleteBiparite1x2Generator",
+            "generator_type" : "complete-bipartite",
+            "generator_params" : [ 1, 2 ],
+            "looping" : true,
+            "agents_start": 20,
+            "agents_end": 2000
+        },
+        {
+            "base_name": "SmallModelGenerator4x0.9",
+            "generator_type" : "Watts-Strogatz",
+            "generator_params" : [ 4, 0.9 ],
+            "looping" : true,
+            "state_weightings" : [ 0.8, 0.1, 0.05, 0.05 ],
+            "agents_start": 1000,
+            "agents_end": 100000
+        },
+        {
+            "base_name": "CircularLadder",
+            "generator_type" : "circular-ladder",
+            "generator_params" : [ ],
+            "looping" : true,
+            "agents_start": 1000,
+            "agents_end": 100000
+        },
+        {
+            "base_name": "Cycle",
+            "generator_type" : "cycle",
+            "generator_params" : [ ],
+            "looping" : true,
+            "agents_start": 5000,
+            "agents_end": 500000
+        },
+        {
+            "base_name": "Periodic2Grid1x10",
+            "generator_type" : "periodic-2grid",
+            "generator_params" : [ 1, 10 ],
+            "looping" : true,
+            "agents_start": 1000,
+            "agents_end": 100000
+        },
+        {
+            "base_name": "NonPeriodic2Grid1x1",
+            "generator_type" : "nonperiodic-2grid",
+            "generator_params" : [ 1, 1 ],
+            "looping" : true,
+            "agents_start": 1000,
+            "agents_end": 100000
+        },
+        {
+            "base_name": "Hypercube",
+            "generator_type" : "hypercube",
+            "generator_params" : [ ],
+            "looping" : true,
+            "agents_start": 1000,
+            "agents_end": 100000
+        },
+        {
+            "base_name": "Star",
+            "generator_type" : "star",
+            "generator_params" : [ ],
+            "looping" : true,
+            "agents_start": 5000,
+            "agents_end": 500000
+        },
+        {
+            "base_name": "Wheel",
+            "generator_type" : "wheel",
+            "generator_params" : [ ],
+            "looping" : true,
+            "agents_start": 1000,
+            "agents_end": 100000
+        },
+        {
+            "base_name": "ErdosReyni0.5",
+            "generator_type" : "erdos-reyni",
+            "generator_params" : [ 0.5 ],
+            "looping" : true,
+            "agents_start": 60,
+            "agents_end": 6000
+        }
+    ]
+}

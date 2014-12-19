@@ -1,0 +1,44 @@
+{
+    "model_name": "SimpleSEIRExample",
+    "total_connections": 2,
+    "distributions": [
+        {
+            "label": "FlatFour",
+            "type": "Flat",
+            "params": [
+                4.0,
+                4.0
+            ]
+        }
+    ],
+    "agents": [
+        {
+            "label": "Patient0",
+            "state": "Infectious",
+            "connections": [
+                "Patient1"
+            ],
+            "s2e": "FlatFour",
+            "e2i": "FlatFour",
+            "i2r": "FlatFour"
+        },
+        {
+            "label": "Patient1",
+            "state": "Susceptible",
+            "connections": [
+                "Patient2"
+            ],
+            "s2e": "FlatFour",
+            "e2i": "FlatFour",
+            "i2r": "FlatFour"
+        },
+        {
+            "label": "Patient2",
+            "state": "Susceptible",
+            "connections": [],
+            "s2e": "FlatFour",
+            "e2i": "FlatFour",
+            "i2r": "FlatFour"
+        }
+    ]
+}

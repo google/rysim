@@ -1,0 +1,24 @@
+{
+    "model_name": "TrivialSEIRModel",
+    "total_connections": 0,
+    "distributions": [
+        {
+            "label": "DefaultDistribution",
+            "type": "Flat",
+            "params": [
+                9,
+                9
+            ]
+        }
+    ],
+    "agents": [
+        {
+            "label": "Patient0",
+            "state": "Recovered",
+            "connections": [],
+            "s2e": "DefaultDistribution",
+            "e2i": "DefaultDistribution",
+            "i2r": "DefaultDistribution"
+        }
+    ]
+}
