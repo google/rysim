@@ -367,7 +367,7 @@ class MachineComparisonTable(object):
                                                                              dependent_caption)
             tex_filename = os.path.join(FLAGS.root_dir, "{}_plot.tex".format(filename_base))
             print "\tGenerating {}".format(tex_filename)
-            tex_figure_path = os.path.join("figures", filename_base)
+            tex_figure_path = os.path.join("figures", "{}_plot.eps".format(filename_base))
             output_latex = r"""\begin{figure}
 \centering
 """
@@ -435,7 +435,7 @@ class MachineComparisonTable(object):
         caption = "Multiline Plot of Machine Comparison for {} vs {}".format(independent_caption, dependent_caption)
         tex_filename = os.path.join(FLAGS.root_dir, "{}_plot.tex".format(filename_base))
         print "\tGenerating {}".format(tex_filename)
-        tex_figure_path = os.path.join("figures", filename_base)
+        tex_figure_path = os.path.join("figures", "{}_plot.eps".format(filename_base))
         output_latex = r"""\begin{figure}
 \centering
 """
