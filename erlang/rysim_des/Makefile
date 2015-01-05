@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-REBAR:=../rebar
+REBAR:=rebar
 APPSRC:=src/rysim_des.app.src
 VERSION:=$(shell grep vsn $(APPSRC) | awk -F\" '{print $$2}')
 

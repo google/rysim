@@ -3,11 +3,6 @@ This code has been successfully built and run on Debian 7, Ubuntu 14.04 & Mint
 available by default from a distribution. This code has been run using the HIPE
 version of the Erlang VM.
 
-The build system assumes that there is a local version of the rebar binary in
-this directory. Either put a copy/link here or change the targeting in the
-Makefiles. The build system should pull in all of the other dependencies that
-are needed.
-
 ## Required Tools and Libraries
 - [Erlang](https://www.erlang-solutions.com/downloads/download-erlang-otp)
 - [Rebar](https://github.com/rebar/rebar)
