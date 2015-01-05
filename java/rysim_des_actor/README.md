@@ -16,7 +16,7 @@ Actor based Java implementation of SEIR simulation kernel.
 
 - Pulls in correct version of Gradle and displays all available tasks.
 
-`./gradle assemble`
+`./gradlew assemble`
 
 - Assembles the artifacts of this project.
 
@@ -24,7 +24,7 @@ Actor based Java implementation of SEIR simulation kernel.
 
 - Assembles and tests this project.
 
-`./gradle clean`
+`./gradlew clean`
  - Deletes the **build/** directory.
 
 `./gradlew distTar`
