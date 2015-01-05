@@ -13,15 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "Model.h"
+//#include "Model.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <fstream>
 #include <glog/logging.h>
 
-#include "LoggingUtils.h"
-#include "ParserUtils.h"
+//#include "LoggingUtils.h"
+//#include "ParserUtils.h"
+#include "../include/Model.h"
+#include "../include/ParserUtils.h"
+#include "../../../third_party/cpp/jsoncpp/include/json/json.h"
+#include "../include/LoggingUtils.h"
 
 Model::Model() {
 }

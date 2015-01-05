@@ -7,7 +7,7 @@ All of the current simulation implementations use some variant of a sequential
 DES algorithm and do not implement more complex distributed algorithms. There
 are scripts and tools provided for reproducing results found in the thesis.
 
-Please contact Ryan Harrison <rharrison@google.com, zoddicus@gmail.com> with any
+Please contact Ryan Harrison (rharrison@google.com, zoddicus@gmail.com) with any
 questions/comments.
 
 If you wish to contribute code please read CONTRIBUTING.md.

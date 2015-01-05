@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "SimulationController.h"
+//#include "SimulationController.h"
 
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 #include <glog/logging.h>
 #include <iostream>
-#include <json/json.h>
+//#include <json/json.h>
 
-#include "Experiment.h"
-#include "NumberGenerator.h"
+//#include "Experiment.h"
+//#include "NumberGenerator.h"
+#include "../include/SimulationController.h"
+#include "../include/Experiment.h"
+#include "../../../third_party/cpp/jsoncpp/include/json/json.h"
 
 SimulationController::SimulationController() {
     timestamp_ = 0;
