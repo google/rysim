@@ -210,7 +210,6 @@ class ScoreTable(object):
             x_max = float(fits[kernel][4][0])
             y_min = float(fits[kernel][3][1])
             y_max = float(fits[kernel][4][1])
-
             f_list.append((scipy.integrate.dblquad(lambda x, y: slope_x * x + slope_y * y + intercept,
                                                    x_min, x_max,
                                                    lambda x: y_min, lambda x: y_max)[0],
@@ -360,18 +359,18 @@ class MachineComparisonTable(object):
             pylab.autoscale()
             pylab.xlabel("Number of Cores")
             pylab.ylabel(dependent_caption)
-            pylab.legend()
-            pylab.savefig(plot_filename, bbox_inches='tight', orientation='landscape')
+            pylab.legend(loc='upper center', bbox_to_anchor=(0.5, -0.10), ncol=4)
+            pylab.savefig(plot_filename, bbox_inches='tight', orientation='portrait')
 
             caption = "Plot of Machine Comparison of {} for {} vs {}".format(kernel, independent_caption,
                                                                              dependent_caption)
             tex_filename = os.path.join(FLAGS.root_dir, "{}_plot.tex".format(filename_base))
             print "\tGenerating {}".format(tex_filename)
-            tex_figure_path = os.path.join("figures", "{}_plot.eps".format(filename_base))
+            tex_figure_path = os.path.join("figures", "auto", "{}_plot.eps".format(filename_base))
             output_latex = r"""\begin{figure}
 \centering
 """
-            output_latex += "\\includegraphics[angle=180,origin=c]{%s}\n" % tex_figure_path
+            output_latex += "\\includegraphics{%s}\n" % tex_figure_path
             output_latex += "\\caption{%s}\n" % caption
             output_latex += "\\label{fig:%s}\n" % filename_base
             output_latex += r"""\end{figure}"""
@@ -381,6 +380,7 @@ class MachineComparisonTable(object):
             tex_filename = os.path.join(FLAGS.root_dir, "{}_table.tex".format(filename_base))
             print "\tGenerating {}".format(tex_filename)
             output_latex = r"""\begin{table}[h]
+\centering
 """
 
             output_latex += r"""\begin{tabular}{|c|c|}
@@ -429,22 +429,23 @@ class MachineComparisonTable(object):
         pylab.autoscale()
         pylab.xlabel("Number of Cores")
         pylab.ylabel(dependent_caption)
-        pylab.legend()
-        pylab.savefig(plot_filename, bbox_inches='tight', orientation='landscape')
+        pylab.legend(loc='upper center', bbox_to_anchor=(0.5, -0.10), ncol=4)
+        pylab.savefig(plot_filename, bbox_inches='tight', orientation='portrait')
 
         caption = "Multiline Plot of Machine Comparison for {} vs {}".format(independent_caption, dependent_caption)
         tex_filename = os.path.join(FLAGS.root_dir, "{}_plot.tex".format(filename_base))
         print "\tGenerating {}".format(tex_filename)
-        tex_figure_path = os.path.join("figures", "{}_plot.eps".format(filename_base))
+        tex_figure_path = os.path.join("figures", "auto", "{}_plot.eps".format(filename_base))
         output_latex = r"""\begin{figure}
 \centering
 """
-        output_latex += "\\includegraphics[angle=180,origin=c]{%s}\n" % tex_figure_path
+        output_latex += "\\includegraphics{%s}\n" % tex_figure_path
         output_latex += "\\caption{%s}\n" % caption
         output_latex += "\\label{fig:%s}\n" % filename_base
         output_latex += r"""\end{figure}"""
         with open(tex_filename, 'w') as f:
             f.write(output_latex)
+
 
 class GenericArtifacts:
     __metaclass__ = ABCMeta
@@ -573,8 +574,8 @@ class GenericArtifacts:
 
     @staticmethod
     def set_figure_params():
-        fig_width = 9.5  # width in inches, this will be the height on the page due to rotation
-        fig_height = 7  # height in inches, this will be the width on the page due to rotation
+        fig_width = 7.25  # width in inches
+        fig_height = 3.75  # height in inches
         fig_size = [fig_width, fig_height]
         fig_params = {'backend': 'ps',
                       'axes.labelsize': 8,
@@ -664,16 +665,16 @@ class GenericArtifacts:
         pylab.autoscale()
         pylab.xlabel(x_label)
         pylab.ylabel(f_label)
-        pylab.legend(bbox_to_anchor=(0., 1.02, 1., 0.102), loc=0, ncol=3, mode="expand", borderaxespad=0.)
-        pylab.savefig(plot_filename, bbox_inches='tight', orientation='landscape')
+        pylab.legend(loc='upper center', bbox_to_anchor=(0.5, -0.10), ncol=4, mode="expand", borderaxespad=0.)
+        pylab.savefig(plot_filename, bbox_inches='tight', orientation='portrait')
 
         tex_filename = os.path.join(FLAGS.root_dir, "{}.tex".format(filename_base))
         print "\tGenerating {}".format(tex_filename)
-        tex_figure_path = os.path.join("figures", filename_base)
+        tex_figure_path = os.path.join("figures", "auto", filename_base)
         output_latex = r"""\begin{figure}
 \centering
 """
-        output_latex += "\\includegraphics[angle=180,origin=c]{%s}\n" % tex_figure_path
+        output_latex += "\\includegraphics{%s}\n" % tex_figure_path
         output_latex += "\\caption{%s}\n" % caption
         output_latex += "\\label{fig:%s}\n" % filename_base
         output_latex += r"""\end{figure}"""
@@ -687,6 +688,7 @@ class GenericArtifacts:
         print "\tGenerating {}".format(table_filename)
 
         output_latex = r"""\begin{table}[h]
+\centering
 """
         output_latex += "\\begin{tabular}{|"
         for _ in key_labels:
@@ -718,6 +720,7 @@ class GenericArtifacts:
         print "\tGenerating {}".format(table_filename)
 
         output_latex = r"""\begin{table}[h]
+\centering
 """
         output_latex += "\\begin{tabular}{|"
         for _ in key_labels:
@@ -750,6 +753,7 @@ class GenericArtifacts:
         print "\tGenerating {}".format(table_filename)
 
         output_latex = r"""\begin{table}[h]
+\centering
 """
         output_latex += "\\begin{tabular}{|"
         for _ in key_labels:
@@ -784,6 +788,7 @@ class GenericArtifacts:
         print "\tGenerating {}".format(table_filename)
 
         output_latex = r"""\begin{table}[h]
+\centering
 """
         output_latex += "\\begin{tabular}{|l|"
         for _ in score_table.get_table().keys():
@@ -828,6 +833,7 @@ class GenericArtifacts:
         print "\tGenerating {}".format(table_filename)
 
         output_latex = r"""\begin{table}[h]
+\centering
 """
         output_latex += "\\begin{tabular}{|l|"
         for _ in score_table.get_table().keys():
@@ -1856,6 +1862,7 @@ def generate_fit_comparison_artifacts():
     print "\tGenerating {}".format(cpu_comparison_filename)
 
     output_latex = r"""\begin{table}[h]
+\centering
 """
 
     output_latex += r"""\begin{tabular}{|l|l|c|}
@@ -1894,6 +1901,7 @@ def generate_fit_comparison_artifacts():
     print "\tGenerating {}".format(memory_comparison_filename)
 
     output_latex = r"""\begin{table}[h]
+\centering
 """
 
     output_latex += r"""\begin{tabular}{|l|l|c|}
