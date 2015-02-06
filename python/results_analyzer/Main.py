@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 from abc import ABCMeta, abstractmethod
 from array import *
 import collections
@@ -257,8 +258,15 @@ class MachineComparisonTable(object):
                            'm3.xlarge': 4}
 
     def __init__(self, kernels):
+        self.per_kernel_means = dict()
+        self.per_kernel_data = dict()
         self.kernels = kernels
         self.table = dict()
+        self.per_kernel_splines = dict()
+        for kernel in self.kernels:
+            self.per_kernel_means[kernel] = dict()
+            self.per_kernel_data[kernel] = dict()
+        self.box_props = dict(linewidth=0.5, color='DimGray', markeredgecolor='DimGray')
 
     def add_1d_fit_score(self, fits, machine):
         machine_entry = self.get_machine_entry(machine)
@@ -314,125 +322,58 @@ class MachineComparisonTable(object):
                 self.table[machine][kernel] = list()
             return self.table[machine]
 
-    def generate_artifacts(self, key_label_caption, key_label_filename, independent_caption, independent_filename,
-                           dependent_caption, dependent_filename):
-        per_kernel_data = dict()
-        for kernel in self.kernels:
-            per_kernel_data[kernel] = dict()
-
+    def generate_per_kernel_means(self):
         for machine in self.table.keys():
             for kernel in self.kernels:
-                per_kernel_data[kernel][MachineComparisonTable.machine_core_counts[machine]] = \
+                self.per_kernel_means[kernel][MachineComparisonTable.machine_core_counts[machine]] = \
                     numpy.mean(self.table[machine][kernel])
-        per_kernel_splines = dict()
-        for kernel in self.kernels:
-            data_list = list()
-            per_kernel_splines[kernel] = dict()
-            for cores, value in per_kernel_data[kernel].iteritems():
-                data_list.append((cores, value))
-            data_list.sort()
-            x_list = list()
-            y_list = list()
-            for entry in data_list:
-                x_list.append(entry[0])
-                y_list.append(entry[1])
-            x_data = numpy.array(x_list)
-            y_data = numpy.array(y_list)
-            x_new = numpy.linspace(x_data.min(), x_data.max(), 300)
-            y_new = scipy.interpolate.spline(x_data, y_data, x_new)
-            per_kernel_splines[kernel]['x_data'] = x_data
-            per_kernel_splines[kernel]['y_data'] = y_data
-            per_kernel_splines[kernel]['x_new'] = x_new
-            per_kernel_splines[kernel]['y_new'] = y_new
-            GenericArtifacts.set_figure_params()
-            filename_base = "machine_comparison_{}_vs_{}_{}_{}".format(independent_filename, dependent_filename,
-                                                                       str(kernel).lower(), key_label_filename)
-            plot_filename = os.path.join(FLAGS.root_dir, "{}_plot.eps".format(filename_base))
 
-            print "\tGenerating {}".format(plot_filename)
-            pylab.figure(1)
-            pylab.clf()
+    def generate_per_kernel_data(self):
+        for machine in self.table.keys():
+            for kernel in self.kernels:
+                self.per_kernel_data[kernel][MachineComparisonTable.machine_core_counts[machine]] = \
+                    self.table[machine][kernel]
 
-            pylab.plot(x_data, y_data, linestyle='-', color='k')
-            pylab.scatter(x_data, y_data, marker='s', color='k', label=kernel)
+    def generate_mean_list(self, kernel):
+        mean_list = list()
+        for cores, value in self.per_kernel_means[kernel].iteritems():
+            mean_list.append((cores, value))
+        mean_list.sort()
+        return mean_list
 
-            pylab.autoscale()
-            pylab.xlabel("Number of Cores")
-            pylab.ylabel(dependent_caption)
-            pylab.legend(loc='upper center', bbox_to_anchor=(0.5, -0.10), ncol=4)
-            pylab.savefig(plot_filename, bbox_inches='tight', orientation='portrait')
-
-            caption = "Plot of Machine Comparison of {} for {} vs {}".format(kernel, independent_caption,
-                                                                             dependent_caption)
-            tex_filename = os.path.join(FLAGS.root_dir, "{}_plot.tex".format(filename_base))
-            print "\tGenerating {}".format(tex_filename)
-            tex_figure_path = os.path.join("figures", "auto", "{}_plot.eps".format(filename_base))
-            output_latex = r"""\begin{figure}
-\centering
-"""
-            output_latex += "\\includegraphics{%s}\n" % tex_figure_path
-            output_latex += "\\caption{%s}\n" % caption
-            output_latex += "\\label{fig:%s}\n" % filename_base
-            output_latex += r"""\end{figure}"""
-            with open(tex_filename, 'w') as f:
-                f.write(output_latex)
-
-            tex_filename = os.path.join(FLAGS.root_dir, "{}_table.tex".format(filename_base))
-            print "\tGenerating {}".format(tex_filename)
-            output_latex = r"""\begin{table}[h]
-\centering
-"""
-
-            output_latex += r"""\begin{tabular}{|c|c|}
-\hline
-"""
-            output_latex += r"""Cores & Score \\
-\hline
-"""
-            for entry in data_list:
-                cores = entry[0]
-                score = entry[1]
-                output_latex += "%d & %.4e \\\\ \n" % (cores, score)
-            output_latex += r"""\hline
-\end{tabular}
-"""
-
-            output_latex += "\\caption{Machine Comparison of %s for %s vs %s in %s}\n" % (kernel, independent_caption,
-                                                                                          dependent_caption,
-                                                                                          key_label_caption)
-            output_latex += "\\label{tab:%s}\n" % filename_base
-            output_latex += r"""\end{table}"""
-
-            with open(tex_filename, 'w') as f:
-                f.write(output_latex)
-
-        filename_base = "machine_comparison_{}_vs_{}_{}".format(independent_filename, dependent_filename,
-                                                                key_label_filename)
+    def generate_1d_plot(self, dependent_caption, dependent_filename, independent_caption, independent_filename, kernel,
+                         key_label_filename):
+        data_list = self.generate_mean_list(kernel)
+        x_list = list()
+        y_list = list()
+        for entry in data_list:
+            x_list.append(entry[0])
+            y_list.append(entry[1])
+        x_data = numpy.array(x_list)
+        y_data = numpy.array(y_list)
+        x_new = numpy.linspace(x_data.min(), x_data.max(), 300)
+        y_new = scipy.interpolate.spline(x_data, y_data, x_new)
+        self.per_kernel_splines[kernel] = dict()
+        self.per_kernel_splines[kernel]['x_data'] = x_data
+        self.per_kernel_splines[kernel]['y_data'] = y_data
+        self.per_kernel_splines[kernel]['x_new'] = x_new
+        self.per_kernel_splines[kernel]['y_new'] = y_new
+        GenericArtifacts.set_figure_params()
+        filename_base = "machine_comparison_{}_vs_{}_{}_{}".format(independent_filename, dependent_filename,
+                                                                   str(kernel).lower(), key_label_filename)
         plot_filename = os.path.join(FLAGS.root_dir, "{}_plot.eps".format(filename_base))
-
         print "\tGenerating {}".format(plot_filename)
         pylab.figure(1)
         pylab.clf()
-
-        markers = ['v', '^', 's', 'D', 'x', '*', 'h']
-        markers_count = 0
-        for kernel in self.kernels:
-            x_new = per_kernel_splines[kernel]['x_new']
-            y_new = per_kernel_splines[kernel]['y_new']
-            x_data = per_kernel_splines[kernel]['x_data']
-            y_data = per_kernel_splines[kernel]['y_data']
-
-            pylab.plot(x_data, y_data, linestyle='-', color='k')
-            pylab.scatter(x_data, y_data, marker=markers[markers_count], color='k', label=kernel)
-            markers_count += 1
-
+        pylab.plot(x_data, y_data, linestyle='-', color='k')
+        pylab.scatter(x_data, y_data, marker='s', color='k', label=kernel)
         pylab.autoscale()
         pylab.xlabel("Number of Cores")
         pylab.ylabel(dependent_caption)
         pylab.legend(loc='upper center', bbox_to_anchor=(0.5, -0.10), ncol=4)
         pylab.savefig(plot_filename, bbox_inches='tight', orientation='portrait')
-
-        caption = "Multiline Plot of Machine Comparison for {} vs {}".format(independent_caption, dependent_caption)
+        caption = "Plot of Machine Comparison of {} for {} vs {}".format(kernel, independent_caption,
+                                                                         dependent_caption)
         tex_filename = os.path.join(FLAGS.root_dir, "{}_plot.tex".format(filename_base))
         print "\tGenerating {}".format(tex_filename)
         tex_figure_path = os.path.join("figures", "auto", "{}_plot.eps".format(filename_base))
@@ -445,6 +386,186 @@ class MachineComparisonTable(object):
         output_latex += r"""\end{figure}"""
         with open(tex_filename, 'w') as f:
             f.write(output_latex)
+
+    def generate_box_whisker_plot(self, dependent_caption, dependent_filename, independent_caption,
+                                  independent_filename, kernel, key_label_filename):
+        positions = self.per_kernel_data[kernel].keys()
+        positions.sort()
+        box_data = list()
+        for position in positions:
+            box_data.append(self.per_kernel_data[kernel][position])
+
+        x_data = self.per_kernel_splines[kernel]['x_data']
+        y_data = self.per_kernel_splines[kernel]['y_data']
+
+        GenericArtifacts.set_figure_params()
+        filename_base = "machine_comparison_box_{}_vs_{}_{}_{}".format(independent_filename, dependent_filename,
+                                                                       str(kernel).lower(), key_label_filename)
+        plot_filename = os.path.join(FLAGS.root_dir, "{}_bwplot.eps".format(filename_base))
+        print "\tGenerating {}".format(plot_filename)
+        pylab.figure(1)
+        pylab.clf()
+        flier_props = self.box_props.copy()
+        flier_props['marker'] = 's'
+        pylab.boxplot(x=box_data, positions=positions, boxprops=self.box_props,
+                      whiskerprops=self.box_props, capprops=self.box_props, flierprops=flier_props,
+                      medianprops=self.box_props, meanprops=self.box_props)
+        pylab.plot(x_data, y_data, linestyle='-', color='k')
+        pylab.scatter(x_data, y_data, marker='s', color='k', label=kernel)
+        pylab.autoscale()
+        pylab.xlabel("Number of Cores")
+        pylab.ylabel(dependent_caption)
+        pylab.legend(loc='upper center', bbox_to_anchor=(0.5, -0.10), ncol=4)
+        pylab.savefig(plot_filename, bbox_inches='tight', orientation='portrait')
+        caption = "Box & Whisker Plot of Machine Comparison of {} for {} vs {}".format(kernel, independent_caption,
+                                                                                       dependent_caption)
+        tex_filename = os.path.join(FLAGS.root_dir, "{}_bwplot.tex".format(filename_base))
+        print "\tGenerating {}".format(tex_filename)
+        tex_figure_path = os.path.join("figures", "auto", "{}_bwplot.eps".format(filename_base))
+        output_latex = r"""\begin{figure}
+\centering
+"""
+        output_latex += "\\includegraphics{%s}\n" % tex_figure_path
+        output_latex += "\\caption{%s}\n" % caption
+        output_latex += "\\label{fig:%s}\n" % filename_base
+        output_latex += r"""\end{figure}"""
+        with open(tex_filename, 'w') as f:
+            f.write(output_latex)
+
+    def generate_table(self, dependent_caption, dependent_filename, independent_caption, independent_filename, kernel,
+                       key_label_caption, key_label_filename):
+        filename_base = "machine_comparison_{}_vs_{}_{}_{}".format(independent_filename, dependent_filename,
+                                                                   str(kernel).lower(), key_label_filename)
+        tex_filename = os.path.join(FLAGS.root_dir, "{}_table.tex".format(filename_base))
+        print "\tGenerating {}".format(tex_filename)
+        output_latex = r"""\begin{table}[h]
+\centering
+"""
+        output_latex += r"""\begin{tabular}{|c|c|}
+\hline
+"""
+        output_latex += r"""Cores & Score \\
+\hline
+"""
+        for entry in self.generate_mean_list(kernel):
+            cores = entry[0]
+            score = entry[1]
+            output_latex += "%d & %.4e \\\\ \n" % (cores, score)
+        output_latex += r"""\hline
+\end{tabular}
+"""
+        output_latex += "\\caption{Machine Comparison of %s for %s vs %s in %s}\n" % (kernel, independent_caption,
+                                                                                      dependent_caption,
+                                                                                      key_label_caption)
+        output_latex += "\\label{tab:%s}\n" % filename_base
+        output_latex += r"""\end{table}"""
+        with open(tex_filename, 'w') as f:
+            f.write(output_latex)
+
+    def generate_multiline_plot(self, dependent_caption, dependent_filename, independent_caption, independent_filename,
+                                key_label_filename):
+        filename_base = "machine_comparison_{}_vs_{}_{}".format(independent_filename, dependent_filename,
+                                                                key_label_filename)
+        plot_filename = os.path.join(FLAGS.root_dir, "{}_plot.eps".format(filename_base))
+        print "\tGenerating {}".format(plot_filename)
+        pylab.figure(1)
+        pylab.clf()
+        markers = ['v', '^', 's', 'D', 'x', '*', 'h']
+        markers_count = 0
+        for kernel in self.kernels:
+            x_data = self.per_kernel_splines[kernel]['x_data']
+            y_data = self.per_kernel_splines[kernel]['y_data']
+
+            pylab.plot(x_data, y_data, linestyle='-', color='k')
+            pylab.scatter(x_data, y_data, marker=markers[markers_count], color='k', label=kernel)
+            markers_count += 1
+        pylab.autoscale()
+        pylab.xlabel("Number of Cores")
+        pylab.ylabel(dependent_caption)
+        pylab.legend(loc='upper center', bbox_to_anchor=(0.5, -0.10), ncol=4)
+        pylab.savefig(plot_filename, bbox_inches='tight', orientation='portrait')
+        caption = "Multi-line Plot of Machine Comparison for {} vs {}".format(independent_caption, dependent_caption)
+        tex_filename = os.path.join(FLAGS.root_dir, "{}_plot.tex".format(filename_base))
+        print "\tGenerating {}".format(tex_filename)
+        tex_figure_path = os.path.join("figures", "auto", "{}_plot.eps".format(filename_base))
+        output_latex = r"""\begin{figure}
+\centering
+"""
+        output_latex += "\\includegraphics{%s}\n" % tex_figure_path
+        output_latex += "\\caption{%s}\n" % caption
+        output_latex += "\\label{fig:%s}\n" % filename_base
+        output_latex += r"""\end{figure}"""
+        with open(tex_filename, 'w') as f:
+            f.write(output_latex)
+
+    def generate_multiline_box_whisker_plot(self, dependent_caption, dependent_filename, independent_caption, 
+                                            independent_filename, key_label_filename):
+        filename_base = "machine_comparison_box_{}_vs_{}_{}".format(independent_filename, dependent_filename,
+                                                                    key_label_filename)
+        plot_filename = os.path.join(FLAGS.root_dir, "{}_bwplot.eps".format(filename_base))
+        print "\tGenerating {}".format(plot_filename)
+        pylab.figure(1)
+        pylab.clf()
+        markers = ['v', '^', 's', 'D', 'x', '*', 'h']
+        markers_count = 0
+        for kernel in self.kernels:
+            x_data = self.per_kernel_splines[kernel]['x_data']
+            y_data = self.per_kernel_splines[kernel]['y_data']
+            positions = self.per_kernel_data[kernel].keys()
+            positions.sort()
+            box_data = list()
+            for position in positions:
+                box_data.append(self.per_kernel_data[kernel][position])
+
+            flier_props = self.box_props.copy()
+            flier_props['marker'] = markers[markers_count]
+            width = 0.1 * float(markers_count + 1)
+            whisker_props = self.box_props.copy()
+            whisker_props['linestyle'] = 'none'
+
+            pylab.boxplot(x=box_data, positions=positions, widths=width, boxprops=self.box_props,
+                          whiskerprops=whisker_props, showcaps=False, showfliers=False,
+                          medianprops=self.box_props, meanprops=self.box_props)
+            pylab.plot(x_data, y_data, linestyle='-', color='k')
+            pylab.scatter(x_data, y_data, marker=markers[markers_count], color='k', label=kernel)
+            markers_count += 1
+        pylab.autoscale()
+        pylab.xlabel("Number of Cores")
+        pylab.ylabel(dependent_caption)
+        pylab.legend(loc='upper center', bbox_to_anchor=(0.5, -0.10), ncol=4)
+        pylab.savefig(plot_filename, bbox_inches='tight', orientation='portrait')
+        caption = "Multi-line Box & Whisker Plot of Machine Comparison for {} vs {}".format(independent_caption, 
+                                                                                            dependent_caption)
+        tex_filename = os.path.join(FLAGS.root_dir, "{}_bwplot.tex".format(filename_base))
+        print "\tGenerating {}".format(tex_filename)
+        tex_figure_path = os.path.join("figures", "auto", "{}_bwplot.eps".format(filename_base))
+        output_latex = r"""\begin{figure}
+\centering
+"""
+        output_latex += "\\includegraphics{%s}\n" % tex_figure_path
+        output_latex += "\\caption{%s}\n" % caption
+        output_latex += "\\label{fig:%s}\n" % filename_base
+        output_latex += r"""\end{figure}"""
+        with open(tex_filename, 'w') as f:
+            f.write(output_latex)
+
+    def generate_artifacts(self, key_label_caption, key_label_filename, independent_caption, independent_filename,
+                           dependent_caption, dependent_filename):
+        self.generate_per_kernel_means()
+        self.generate_per_kernel_data()
+
+        for kernel in self.kernels:
+            self.generate_1d_plot(dependent_caption, dependent_filename, independent_caption, independent_filename,
+                                  kernel, key_label_filename)
+            self.generate_box_whisker_plot(dependent_caption, dependent_filename, independent_caption,
+                                           independent_filename, kernel, key_label_filename)
+            self.generate_table(dependent_caption, dependent_filename, independent_caption, independent_filename,
+                                kernel, key_label_caption, key_label_filename)
+
+        self.generate_multiline_plot(dependent_caption, dependent_filename, independent_caption, independent_filename,
+                                     key_label_filename)
+        self.generate_multiline_box_whisker_plot(dependent_caption, dependent_filename, independent_caption,
+                                                 independent_filename, key_label_filename)
 
 
 class GenericArtifacts:
