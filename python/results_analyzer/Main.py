@@ -417,7 +417,7 @@ class MachineComparisonTable(object):
         pylab.ylabel(dependent_caption)
         pylab.legend(loc='upper center', bbox_to_anchor=(0.5, -0.10), ncol=4)
         pylab.savefig(plot_filename, bbox_inches='tight', orientation='portrait')
-        caption = "Box & Whisker Plot of Machine Comparison of {} for {} vs {}".format(kernel, independent_caption,
+        caption = "Box \& Whisker Plot of Machine Comparison of {} for {} vs {}".format(kernel, independent_caption,
                                                                                        dependent_caption)
         tex_filename = os.path.join(FLAGS.root_dir, "{}_bwplot.tex".format(filename_base))
         print "\tGenerating {}".format(tex_filename)
@@ -534,7 +534,7 @@ class MachineComparisonTable(object):
         pylab.ylabel(dependent_caption)
         pylab.legend(loc='upper center', bbox_to_anchor=(0.5, -0.10), ncol=4)
         pylab.savefig(plot_filename, bbox_inches='tight', orientation='portrait')
-        caption = "Multi-line Box & Whisker Plot of Machine Comparison for {} vs {}".format(independent_caption, 
+        caption = "Multi-line Box \& Whisker Plot of Machine Comparison for {} vs {}".format(independent_caption,
                                                                                             dependent_caption)
         tex_filename = os.path.join(FLAGS.root_dir, "{}_bwplot.tex".format(filename_base))
         print "\tGenerating {}".format(tex_filename)
@@ -695,7 +695,7 @@ class GenericArtifacts:
 
     @staticmethod
     def set_figure_params():
-        fig_width = 7.25  # width in inches
+        fig_width = 7.5  # width in inches
         fig_height = 3.75  # height in inches
         fig_size = [fig_width, fig_height]
         fig_params = {'backend': 'ps',
